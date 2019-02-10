@@ -2,18 +2,18 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.produce
 
-fun main(args: Array<String>) {
+fun main() {
     runBlocking {
-        BatchTest().run()
+        ThrottleLastTest().run()
         DebounceTest().run()
     }
 }
 
-class BatchTest {
+class ThrottleLastTest {
 
     suspend fun run() = coroutineScope {
         val job = launch {
-            produce().batch(200).consumeEach { next ->
+            produce().throttleLast(200).consumeEach { next ->
                 print(next)
                 print(" ")
             }
